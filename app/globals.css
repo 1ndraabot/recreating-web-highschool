@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Palet Identitas SMK Telkom Purwokerto (lihat PRD Bagian 5) */
+  --color-primary: #E31E24;          /* Telkom Red - aksen */
+  --color-primary-hover: #B3141A;   /* Deep Red - hover */
+  --color-charcoal: #1F2937;        /* footer, judul */
+  --color-slate-gray: #6B7280;      /* teks sekunder, tanggal */
+  --color-soft-gray: #F3F4F6;       /* latar section selang-seling */
+
+  --font-sans: var(--font-poppins);
+  --font-heading: var(--font-poppins);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1F2937;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
