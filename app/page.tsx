@@ -32,9 +32,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <img
-              // TODO: ganti ke foto asli Kepala Sekolah bila tersedia
-              src="https://picsum.photos/seed/kepala/480/600"
+              src="/kepalasekolah.png"
               alt={`Foto ${profil.kepala.nama}, ${profil.kepala.jabatan}`}
+              width={1374}
+              height={1145}
               className="w-full h-auto object-cover rounded-xl shadow-md mx-auto"
             />
             <div className="space-y-4">
