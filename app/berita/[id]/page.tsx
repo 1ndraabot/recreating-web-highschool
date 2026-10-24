@@ -1,45 +1,33 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useAdminData } from "@/components/AdminDataProvider";
 import Link from "next/link";
-import { berita, type Berita } from "@/data/berita";
+import { notFound, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface BeritaParams {
   params: Promise<{ id: string }>;
 }
 
-// Beri tahu Next.js semua slug berita agar setiap halaman diprerender statis
-export async function generateStaticParams() {
-  return berita.map((item) => ({
-    id: item.id,
-  }));
-}
+export default function BeritaDetail({ params }: BeritaParams) {
+  const router = useRouter();
+  const { berita } = useAdminData();
+  const [item, setItem] = useState<any>(null);
 
-// Metadata dinamis berdasarkan slug
-export async function generateMetadata({ params }: BeritaParams) {
-  const { id } = await params;
-  const item = berita.find((b) => b.id === id);
-
-  if (!item) {
-    return {
-      title: "Berita tidak ditemukan | SMK Telkom Purwokerto",
-      description: "Halaman berita yang diminta tidak ditemukan.",
+  useEffect(() => {
+    const resolve = async () => {
+      const { id } = await params;
+      const found = berita.find((b) => b.id === id);
+      if (found) {
+        setItem(found);
+      } else {
+        notFound();
+      }
     };
-  }
+    resolve();
+  }, [berita, params]);
 
-  return {
-    title: `${item.judul} | SMK Telkom Purwokerto`,
-    description: item.ringkasan,
-  };
-}
-
-export default async function BeritaDetail({ params }: BeritaParams) {
-  const { id } = await params;
-  const item: Berita | undefined = berita.find((b) => b.id === id);
-
-  // Slug tidak ditemukan -> 404 via notFound()
-  if (!item) {
-    notFound();
-    return null;
-  }
+  if (!item) return null;
 
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -68,7 +56,7 @@ export default async function BeritaDetail({ params }: BeritaParams) {
 
       {/* Isi berita (dipisahkan per paragraf dengan \n\n) */}
       <div className="text-[#1F2937]">
-        {item.isi.split("\n\n").map((paragraph, index) => (
+        {item.isi.split("\n\n").map((paragraph: string, index: number) => (
           <p key={index} className="mb-4 text-base leading-relaxed">
             {paragraph}
           </p>

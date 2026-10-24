@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { profil } from "@/data/profil";
+import { useAdminData } from "@/components/AdminDataProvider";
 
 const footerLinks = [
   { name: "Home", href: "/" },
@@ -11,6 +13,7 @@ const footerLinks = [
 ];
 
 export default function Footer() {
+  const { profil } = useAdminData();
   return (
     <footer className="bg-[#1F2937] text-white pt-12 border-t-4 border-[#E31E24]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

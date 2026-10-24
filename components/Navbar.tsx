@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/components/AuthProvider";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <header className="bg-white shadow-sm border-b border-[#E31E24]">
@@ -43,6 +45,29 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/admin"
+                  className="text-[#1F2937] hover:text-[#E31E24] font-medium transition-colors"
+                >
+                  Admin
+                </Link>
+                <button
+                  onClick={logout}
+                  className="text-xs font-medium text-[#E31E24] hover:text-[#B3141A] underline"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="text-[#1F2937] hover:text-[#E31E24] font-medium transition-colors underline"
+              >
+                Login Admin
+              </Link>
+            )}
           </nav>
 
           {/* Hamburger menu (mobile) */}
@@ -92,6 +117,34 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
+          {isAuthenticated ? (
+            <>
+              <Link
+                href="/admin"
+                onClick={() => setIsOpen(false)}
+                className="text-[#1F2937] hover:text-[#E31E24] font-medium py-2 transition-colors"
+              >
+                Admin
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="text-xs font-medium text-[#E31E24] py-2 underline hover:text-[#B3141A]"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="text-[#1F2937] hover:text-[#E31E24] font-medium py-2 transition-colors underline"
+            >
+              Login Admin
+            </Link>
+          )}
         </nav>
       </div>
     </header>
